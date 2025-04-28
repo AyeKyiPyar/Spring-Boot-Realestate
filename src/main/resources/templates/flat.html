@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <title>Real Estate</title>
+	  <script src="https://cdn.tailwindcss.com"></script>
+	  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+	</head>
+	<body class="bg-green-50">
+
+	  <!-- Top Header Bar -->
+	  <div th:replace="fragments/header :: header"></div>
+	
+	  <!-- Sidebar + Main Content -->
+	  <div class="flex pt-16 h-screen"> <!-- pt-16 pushes content below fixed header -->
+	
+	    <!-- Sidebar -->
+	    <div th:replace="fragments/sidebar :: sidebar"></div>
+		
+	    <!-- Main Content -->
+	    <div class="flex-1 p-6 mt-10 overflow-y-auto">
+	    
+		<!-- nav -->
+	    <div th:replace="fragments/nav :: nav"></div>
+
+		
+	      <div class="max-w-3xl mx-auto bg-white p-8 mt-4 shadow-md rounded-lg">
+			    <h2 class="text-2xl font-bold text-green-700 mb-6 text-center">Add New Flat</h2>
+				<p th:if="${error}" th:text="${error}" style="color: red;"></p>
+			    <form class="space-y-6" th:action = "@{/post/add/flat}" th:object = "${property}" enctype="multipart/form-data" method = "post">
+			
+			      <!-- Title -->
+			      <div>
+			        <label for="title" class="block text-gray-700 font-medium mb-1">Property Title</label>
+			        <input type="text" id="title" th:field = "*{title}" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" placeholder="e.g., 2BHK City Flat">
+			      </div>
+			
+			      <!-- Description -->
+			      <div>
+			        <label for="description" class="block text-gray-700 font-medium mb-1">Description</label>
+			        <textarea id="description" rows="4" th:field = "*{description}" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" placeholder="Details about the flat..."></textarea>
+			      </div>
+				  
+				  <!-- Floor Number -->
+				<div>
+				  <label for="floor" class="block text-gray-700 font-medium mb-1">Floor Number</label>
+				  <input type="number" id="floor" th:field="*{floor}" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" placeholder="e.g., 3">
+				</div>
+								  
+			      <!-- Price -->
+			      <div>
+			        <label for="price" class="block text-gray-700 font-medium mb-1">Price ($)</label>
+			        <input type="number" id="price" th:field = "*{price}" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" placeholder="e.g., 200000">
+			      </div>
+			
+			      <!-- Location -->
+			      <div>
+			        <label for="location" class="block text-gray-700 font-medium mb-1">Location</label>
+			        <input type="text" id="location" th:field = "*{location}" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" placeholder="e.g., Downtown, Yangon">
+			      </div>
+			      
+			       <!-- Detail Address -->
+			      <div>
+			        <label for="address" class="block text-gray-700 font-medium mb-1" >Detail Address</label>
+			        <textarea id="address" th:field = "*{address}" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" placeholder="e.g.,Street, State, City">
+			        </textarea>
+			      </div>
+					<!-- area -->
+			      <div>
+			        <label for="area" class="block text-gray-700 font-medium mb-1" >Area</label>
+			        <input type="text" id="area" th:field = "*{area}" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" placeholder="e.g., 25000 sqtf">
+			      </div>
+			      
+			      <!-- Bedrooms and Bathrooms -->
+			      <div class="flex space-x-4">
+			        <div class="w-1/2">
+			          <label for="bedrooms" class="block text-gray-700 font-medium mb-1">Bedrooms</label>
+			          <input type="number" id="bedrooms" th:field = "*{numOfBedroom}" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" placeholder="e.g., 2">
+			        </div>
+			        <div class="w-1/2">
+			          <label for="bathrooms" class="block text-gray-700 font-medium mb-1">Bathrooms</label>
+			          <input type="number" id="bathrooms" th:field = "*{numOfBathroom}" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" placeholder="e.g., 1">
+			        </div>
+			      </div>
+			
+			      <!-- Image Upload -->
+			      <div>
+			        <label for="image" class="block text-gray-700 font-medium mb-1">Upload Image</label>
+			        <input type="file" id="file" name = "file" class="w-full text-gray-700">
+			      </div>
+			
+			      <!-- Submit Button -->
+			      <div>
+			        <button type="submit" class="w-full bg-green-600 text-white text-lg py-3 rounded-full hover:bg-green-700 transition">
+			          Submit Flat
+			        </button>
+			      </div>
+			
+			    </form>
+			  </div>
+			
+	    </div>
+	  </div>
+		<!-- Tailwind CSS for Dropdown Functionality -->
+		<script>
+		  // Get the elements
+		  const addPostBtn = document.getElementById('addPostBtn');
+		  const dropdownMenu = document.getElementById('dropdownMenu');
+		
+		  // Add event listener to toggle dropdown visibility
+		  addPostBtn.addEventListener('click', function(event) {
+		    event.stopPropagation();  // Prevent the click event from bubbling up
+		    dropdownMenu.classList.toggle('hidden'); // Toggle visibility
+		  });
+		
+		  // Close dropdown if the user clicks outside of it
+		  document.addEventListener('click', function(event) {
+		    if (!addPostBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+		      dropdownMenu.classList.add('hidden');
+		    }
+		  });
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <title>Real Estate</title>
+	  <script src="https://cdn.tailwindcss.com"></script>
+	  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+	</head>
+	<body class="bg-green-50">
+
+	  <!-- Top Header Bar -->
+	  <div th:replace="fragments/header :: header"></div>
+	
+	  <!-- Sidebar + Main Content -->
+	  <div class="flex pt-16 h-screen"> <!-- pt-16 pushes content below fixed header -->
+	
+	    <!-- Sidebar -->
+	    <div th:replace="fragments/sidebar :: sidebar"></div>
+		
+	    <!-- Main Content -->
+	    <div class="flex-1 p-6 mt-10 overflow-y-auto">
+	    
+		<!-- nav -->
+	    <div th:replace="fragments/nav :: nav"></div>
+
+		
+	     <div th:if = "${properties.size() == 0}">
+	     	<p class="text-center text-gray-500 text-2xl mt-8">
+			    No data to display
+			</p>
+
+	     </div>
+		<div th:unless = "${properties.size() ==  0}">
+	      	<h1 class="text-3xl font-semibold text-center mt-8 mb-8">Available Properties</h1>
+			<!-- Search Form -->
+			<div class="flex justify-center mb-8">
+			    <form th:action="@{/filter/house}" method="get" class="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4">
+			        <!-- Location Input -->
+			        <input type="text" name="story" placeholder="Story"
+			               class="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+			
+			        <!-- Min Price Input -->
+			        <input type="number" name="price" placeholder="Min Price" min = "0"
+			               class="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+			
+			        <!-- Submit Button (spans all 3 columns on mobile) -->
+			        <th:block th:with="property=${properties[0]}">
+			        	<input type = "hidden" name = "type" th:value = "${property.propertyType.id}">
+			       </th:block>
+			            <button type="submit"
+			                    class="bg-green-700 text-white w-[100px] px-6 py-2 rounded hover:bg-green-800">
+			                Filter
+			            </button>
+			       
+			    </form>
+			</div>
+
+		     <div class="container mx-auto px-4 py-8" >
+				  
+				
+				  <!-- Property Listings Grid -->
+				  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" >
+				    <th:block th:each = "property : ${properties}">
+				    <!-- Property Card 1 -->
+				    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+				      <img th:src="@{'/images/' + ${property.image}}" alt="House" class="w-full h-64 object-cover">
+				      <div class="p-6">
+				        <h2 class="text-xl font-semibold text-gray-800" th:text="${property.title}"></h2>
+				        <p class="text-gray-600 mt-2" th:text="${property.description}"></p>
+				        <div class="flex items-center mt-4">
+				          <span class="text-xl font-bold text-green-600"th:text="${property.price + ' MMK'}"></span>
+				          <a th:href="@{'/view-detail/'+${property.id}}" class="ml-auto text-blue-600 hover:underline">View Details</a>
+				        </div>
+				      </div>
+				    </div>
+					</th:block>
+				  </div><!-- grid -->
+				</div>
+		    </div>
+	    </div>
+	  </div>
+		<!-- Tailwind CSS for Dropdown Functionality -->
+		<script>
+		  // Get the elements
+		  const addPostBtn = document.getElementById('addPostBtn');
+		  const dropdownMenu = document.getElementById('dropdownMenu');
+		
+		  // Add event listener to toggle dropdown visibility
+		  addPostBtn.addEventListener('click', function(event) {
+		    event.stopPropagation();  // Prevent the click event from bubbling up
+		    dropdownMenu.classList.toggle('hidden'); // Toggle visibility
+		  });
+		
+		  // Close dropdown if the user clicks outside of it
+		  document.addEventListener('click', function(event) {
+		    if (!addPostBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+		      dropdownMenu.classList.add('hidden');
+		    }
+		  });
+		</script>
+	</body>
+
+</html>

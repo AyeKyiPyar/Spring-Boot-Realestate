@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <title>Real Estate</title>
+	  <script src="https://cdn.tailwindcss.com"></script>
+	  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+	</head>
+	<body class="bg-green-50">
+
+	  <!-- Top Header Bar -->
+	  <div th:replace="fragments/header :: header"></div>
+	
+	  <!-- Sidebar + Main Content -->
+	  <div class="flex pt-16 h-screen"> <!-- pt-16 pushes content below fixed header -->
+	
+	    <!-- Sidebar -->
+	    <div th:replace="fragments/sidebar :: sidebar"></div>
+		
+	    <!-- Main Content -->
+	    <div class="flex-1 p-6 mt-10 overflow-y-auto">
+	    
+		<!-- nav -->
+	    <div th:replace="fragments/nav :: nav"></div>
+
+		
+	      <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow mt-8">
+		        <h2 class="text-2xl font-bold mb-4" th:text="${property.title}">Title</h2>
+		
+		        <img th:src="@{'/images/' + ${property.image}}" alt="Property Image" class="w-full h-64 object-cover mb-4 rounded">
+		
+		      	 <div class="flex justify-between items-center mb-2">
+				  <span class="font-bold text-black text-l">Location:</span>
+				  <span th:text="${property.location}" class="text-gray-900"></span>
+				</div>
+				 <div class="flex justify-between items-center mb-2">
+				  <span class="font-bold text-black text-l">Address:</span>
+				  <span th:text="${property.address}" class="text-gray-900"></span>
+				</div>
+		       <div class="flex justify-between items-center mb-2">
+				  <span class="font-bold text-black text-l">Price:</span>
+				  <span th:text="${property.price + ' MMK'}" class="text-gray-900"></span>
+				</div>
+				 <div class="flex justify-between items-center mb-2">
+				  <span class="font-bold text-black text-l">Area:</span>
+				  <span th:text="${property.area} + 'sqft'" class="text-gray-900"></span>
+				</div>
+		        <div class="flex justify-between items-center mb-2">
+				  <span class="font-bold text-black text-l">Bedrooms:</span>
+				  <span th:text="${property.numOfBedroom != null ? property.numOfBedroom : 'N/A'}" class="text-gray-900"></span>
+				</div>
+				<div class="flex justify-between items-center mb-2">
+				  <span class="font-bold text-black text-l">Bathrooms:</span>
+				  <span th:text="${property.numOfBedroom != null ? property.numOfBedroom : 'N/A'}" class="text-gray-900"></span>
+				</div>
+		        <div class="flex justify-between items-center mb-2">
+				  <span class="font-bold text-black text-l">Type:</span>
+				  <span th:text="${property.propertyType.name}" class="text-gray-900"></span>
+				</div>
+		        <div class="flex justify-between items-center mb-2">
+				  <span class="font-bold text-black text-l">Owner:</span>
+				  <span th:text="${property.owner.name}" class="text-gray-900"></span>
+				</div>
+		      
+		
+		        <p class="mt-4"><strong>Description:</strong></p>
+		        <p th:text="${property.description}">Nice place...</p>
+		
+		       
+		    </div>
+	    </div>
+	  </div>
+		<!-- Tailwind CSS for Dropdown Functionality -->
+		<script>
+		  // Get the elements
+		  const addPostBtn = document.getElementById('addPostBtn');
+		  const dropdownMenu = document.getElementById('dropdownMenu');
+		
+		  // Add event listener to toggle dropdown visibility
+		  addPostBtn.addEventListener('click', function(event) {
+		    event.stopPropagation();  // Prevent the click event from bubbling up
+		    dropdownMenu.classList.toggle('hidden'); // Toggle visibility
+		  });
+		
+		  // Close dropdown if the user clicks outside of it
+		  document.addEventListener('click', function(event) {
+		    if (!addPostBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+		      dropdownMenu.classList.add('hidden');
+		    }
+		  });
+		</script>
+	</body>
+
+</html>

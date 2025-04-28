@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <title>Real Estate</title>
+	  <script src="https://cdn.tailwindcss.com"></script>
+	  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+	</head>
+	<body class="bg-green-50">
+	
+		  <!-- Top Header Bar -->
+		  <div th:replace="fragments/header :: header"></div>
+		
+		  <!-- Sidebar + Main Content -->
+		  <div class="flex pt-16 h-screen"> <!-- pt-16 pushes content below fixed header -->
+		
+		    <!-- Sidebar -->
+		    <div th:replace="fragments/sidebar :: sidebar"></div>
+			
+		    <!-- Main Content -->
+		    <div class="flex-1 p-6 mt-10 overflow-y-auto">
+		    
+			<!-- nav -->
+		    <div th:replace="fragments/nav :: nav"></div>
+	
+			
+		      <div class="max-w-4xl mx-auto" th:each = "lawyer : ${lawyers}">
+			    <h1 class="text-3xl font-bold mb-6 text-gray-800 mt-6">Our Legal Experts</h1>
+			
+			    <!-- Lawyer Row -->
+			    <div class="bg-white shadow rounded-lg p-4 mb-4 flex items-center space-x-6">
+			      <img th:src="${'/images/'+lawyer.image}" alt="Jane Doe" class="w-20 h-20 rounded-full object-cover">
+			      <div class="flex-1">
+			        <h2 class="text-xl font-semibold text-gray-800" th:text = "${lawyer.name}"></h2>
+			        <p class="text-gray-600">Family Law Specialist</p>
+			       <p class="text-sm text-gray-500">
+						  📧 <span th:text="${lawyer.email}"></span> | 📞 <span th:text="${lawyer.phone}"></span>
+						</p>
+			      </div>
+			      <!-- <a th:href = "@{'/lawyer/book/'+${lawyer.id}}" class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">Book Now</a> -->
+			      <a th:href = "@{'/lawyer/book'}" class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">Book Now</a>
+			    </div>
+			
+			   
+			
+			  </div>
+		
+		    </div>
+		  </div>
+			<!-- Tailwind CSS for Dropdown Functionality -->
+		<script>
+		  // Get the elements
+		  const addPostBtn = document.getElementById('addPostBtn');
+		  const dropdownMenu = document.getElementById('dropdownMenu');
+		
+		  // Add event listener to toggle dropdown visibility
+		  addPostBtn.addEventListener('click', function(event) {
+		    event.stopPropagation();  // Prevent the click event from bubbling up
+		    dropdownMenu.classList.toggle('hidden'); // Toggle visibility
+		  });
+		
+		  // Close dropdown if the user clicks outside of it
+		  document.addEventListener('click', function(event) {
+		    if (!addPostBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+		      dropdownMenu.classList.add('hidden');
+		    }
+		  });
+		</script>
+		</body>
+	</html>

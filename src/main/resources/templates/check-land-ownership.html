@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <title>Real Estate</title>
+	  <script src="https://cdn.tailwindcss.com"></script>
+	  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+	</head>
+	<body class="bg-green-50">
+
+	  <!-- Top Header Bar -->
+	  <div th:replace="fragments/header :: header"></div>
+	
+	  <!-- Sidebar + Main Content -->
+	  <div class="flex pt-16 h-screen"> <!-- pt-16 pushes content below fixed header -->
+	
+	    <!-- Sidebar -->
+	    <div th:replace="fragments/sidebar :: sidebar"></div>
+		
+	    <!-- Main Content -->
+	    <div class="flex-1 p-6 mt-10 overflow-y-auto">
+	    
+		<!-- nav -->
+	    <div th:replace="fragments/nav :: nav"></div>
+
+		<div class="text-center mt-20">
+			  <h1 class="text-2xl font-bold mb-16"></h1>
+			
+			  <div class="space-y-4">
+			    <a th:href="@{/lawyer/book}" class="inline-block bg-green-700 text-white text-xl px-10 py-5 w-80 rounded-full hover:bg-red-700 transition">
+			     Permit
+			    </a>
+			  </div>
+			  
+			  <div class="space-y-4 mt-16">
+			    <a th:href="@{/lawyer/book}"  class="inline-block bg-green-700 text-white text-xl px-10 py-5 w-80 rounded-full hover:bg-red-700 transition">
+			      Gayan
+			    </a>
+			  </div>
+		</div>
+
+	   </div>
+	 </div>
+	
+</body>
+
+</html>

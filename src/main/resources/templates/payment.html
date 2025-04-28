@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Login</title>
+	    <script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body class="bg-green-50 ">
+
+	  <!-- Top Header Bar -->
+	  <div th:replace="fragments/header :: header"></div>
+	
+	  <!-- Sidebar + Main Content -->
+	  <div class="flex pt-16 h-screen"> <!-- pt-16 pushes content below fixed header -->
+	
+	    <!-- Sidebar -->
+	    <div th:replace="fragments/sidebar :: sidebar"></div>
+		
+	    <!-- Main Content -->
+	    <div class="flex-1 p-6 mt-10 overflow-y-auto">
+	    
+		<!-- nav -->
+	    <div th:replace="fragments/nav :: nav"></div>
+
+		
+	      <div class="w-full max-w-md bg-white rounded-lg mt-4 shadow-md p-8 ml-[450px]">
+	        <h2 class="text-2xl font-bold text-green-700 mb-6 text-center">Premium Account will cost 
+	        50000 mmk for a month</h2>
+			 <!-- Error message -->
+	        <div th:if="${error}" class="mb-4 text-sm text-red-600 bg-red-100 px-4 py-2 rounded" th:text="${error}" >
+	            
+	        </div>
+	        <form th:action = "@{/payment}" th:object = "${bank}" method = "post" class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md space-y-4">
+				  <h2 class="text-2xl font-semibold text-gray-700">Bank Account Details</h2>
+				
+				  <!-- Account Holder Name -->
+				  <div>
+				    <label class="block text-gray-600 text-sm mb-1" for="accountHolder">Account Holder</label>
+				    <input type="text" id="accountHolder" th:field = "*{accountHolder}" name="accountHolder" required
+				           class="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+				  </div>
+				
+				  <!-- Account Number -->
+				  <div>
+				    <label class="block text-gray-600 text-sm mb-1" for="accountNumber">Account Number</label>
+				    <input type="text" id="accountNumber" th:field = "*{accountNumber}" name="accountNumber" required
+				           class="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+				  </div>
+				
+				  <!-- Account Type -->
+				  <div>
+				    <label class="block text-gray-600 text-sm mb-1" for="accountType">Account Type</label>
+				    <select id="accountType" name="accountType" th:field = "*{accountType}"
+				            class="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+				      <option value="">Select Type</option>
+				      <option value="checking">Visa</option>
+				      <option value="checking">Master</option>
+				      <option value="savings">Savings</option>
+				      <option value="business">Business</option>
+				    </select>
+				  </div>
+				
+				  <!-- Expired Date -->
+				  <div>
+				    <label class="block text-gray-600 text-sm mb-1" for="expiryDate">Expire Date</label>
+				    <input type="date" id="expiryDate" name="expiryDate" th:field = "*{expiredDate}"
+				           class="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+				  </div>
+				
+				  <!-- Submit Button -->
+				  <div>
+				    <button type="submit"
+				            class="w-full bg-green-700 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+				      Submit
+				    </button>
+				  </div>
+				</form>
+    		</div>
+			<!-- Tailwind CSS for Dropdown Functionality -->
+		<script>
+		  // Get the elements
+		  const addPostBtn = document.getElementById('addPostBtn');
+		  const dropdownMenu = document.getElementById('dropdownMenu');
+		
+		  // Add event listener to toggle dropdown visibility
+		  addPostBtn.addEventListener('click', function(event) {
+		    event.stopPropagation();  // Prevent the click event from bubbling up
+		    dropdownMenu.classList.toggle('hidden'); // Toggle visibility
+		  });
+		
+		  // Close dropdown if the user clicks outside of it
+		  document.addEventListener('click', function(event) {
+		    if (!addPostBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+		      dropdownMenu.classList.add('hidden');
+		    }
+		  });
+		</script>
+	    </div>
+	  </div>
+	
+	</body>
+</html>
